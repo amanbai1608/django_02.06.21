@@ -1,0 +1,45 @@
+Category.objects.all()   -- Все обьекты
+SELECT * FROM category;
+
+Category.objects.get(id=5)   -- Один обьект
+SELECT * FROM category WHERE id=5;
+DoesNotExist - когда обькт не найден
+MultipleObjectsReturned  - когда get() возвращает несколько обьектов
+
+Category.objects.first.order_by(...)   --
+SELECT * FROM category ORDER BY ... LIMIT1;
+Category.objects.last.order_by(...)   -- Все обьекты
+SELECT * FROM category ORDER BY ... DESK LIMIT1;
+
+Category.objects.filter(name=..., slug=...)  - фильтрация
+SELECT * FROM category WHERE name=... AND slug...;
+
+Category.objects.exclude(name=..., slug=...)
+SELECT * FROM category WHERE name=<>...;
+
+# ограничение набора полей
+# name, description, image, slug, parent
+only()
+Category.objects.only('name', 'description')
+SELECT name, description FROM category;
+
+defer()
+Category.objects.defer('name', 'description')
+SELECT image, slug, parent FROM category;
+
+# сортировка
+order_by()
+Category.objects.order_by('name')
+SELECT * FROM category ORDER BY name;
+
+Category.objects.order_by('-name')
+SELECT * FROM category ORDER BY name DESC;
+
+reverse()
+Category.objects.all()
+[obj1, obj2, obj3]
+
+Category.objects.reverse()
+[obj3, obj2, obj1]
+
+
