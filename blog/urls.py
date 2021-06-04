@@ -23,7 +23,10 @@ from main import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.index_page, name='index-page')
+    path('', views.IndexPageView.as_view(), name='index-page'),
+    path('posts/<slug:category>/', views.PostsListView.as_view(), name='posts-list'),
+    path('posts/details/<int:pk>/', views.PostDetailsView.as_view(), name='posts-details'),
+
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

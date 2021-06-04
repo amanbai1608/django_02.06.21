@@ -1,13 +1,31 @@
-from django.http import HttpResponse
-from django.shortcuts import render
+from django.views.generic import ListView, DetailView
 
-from .models import Category
+from .models import Category, Post
 
 
-def index_page(request):
-    categories = Category.objects.all()
-    return render(request, 'main/index.html', {'categories': categories})
-# TODO: Переписать при помощи классов
+
+class IndexPageView(ListView):
+    queryset = Category.objects.all()
+    template_name = 'main/index.html'
+    context_object_name = 'categories'
+
+
+class PostsListView(ListView):
+    queryset = Post.objects.all()
+    template_name = 'main/posts_list.html'
+    context_object_name = 'posts'
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        category_id = self.kwargs.get('category')
+        return queryset.filter(category__slug=category_id)
+
+
+class PostDetailsView(DetailView):
+    queryset = Post.objects.all()
+    template_name = 'main/post_details.html'
+    # context_object_name = 'post'
+
 
 
 
